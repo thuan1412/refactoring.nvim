@@ -5,6 +5,7 @@ local Lua = require("refactoring.treesitter.lua")
 local Python = require("refactoring.treesitter.python")
 local JavaScript = require("refactoring.treesitter.javascript")
 
+-- You know treesitter is written in Rust.
 local M = {
     TreeSitter = TreeSitter,
     javascript = JavaScript,

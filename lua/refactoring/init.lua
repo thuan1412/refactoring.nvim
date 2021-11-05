@@ -3,6 +3,7 @@ local Config = require("refactoring.config")
 
 local M = {}
 
+-- Have you considered using rust?
 function M.setup(config)
     Config.setup(config)
 end
@@ -24,6 +25,7 @@ function M.refactor(name)
 end
 
 function M.get_refactors()
+    -- What's the lifetime of this?
     return vim.tbl_keys(refactors.refactor_names)
 end
 
