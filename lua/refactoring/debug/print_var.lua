@@ -48,6 +48,18 @@ local function get_variable()
     return variable_region:get_text()[1]
 end
 
+local function get_indentation()
+    local current_pos = Point:from_cursor()
+    local line_content = vim.api.nvim_buf_get_lines(
+        0,
+        current_pos.row - 1,
+        current_pos.row,
+        true
+    )[1]
+    local indentation = string.match(line_content, "^(%s*)")
+    return indentation
+end
+
 local function printDebug(bufnr, config)
     return Pipeline
         :from_task(refactor_setup(bufnr, config))
@@ -98,8 +110,11 @@ local function printDebug(bufnr, config)
                 var = variable,
             }
 
+            local indentation = get_indentation()
+
             local print_statement = refactor.code.print_var(print_var_opts)
                 .. refactor.code.comment("__AUTO_GENERATED_PRINT_VAR__")
+            print_statement = indentation .. print_statement
 
             refactor.text_edits = {
                 lsp_utils.insert_new_line_text(
